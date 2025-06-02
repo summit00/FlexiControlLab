@@ -1,15 +1,10 @@
-import sys
-import os
 import math
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-
-
-from src.simulation.runSimulation import run_simulation
-from src.plants.dc_motor import DCMotor
-from src.controllers.pidController import PIDController
-from src.tuners.zieglerNichols import ziegler_nichols_pi_tuning
-from src.tuners.bruteForce import brute_force_pid_tuning
+from simulation.runSimulation import run_simulation
+from plants.dc_motor import DCMotor
+from controllers.pidController import PIDController
+from tuners.zieglerNichols import ziegler_nichols_pi_tuning
+from tuners.bruteForce import brute_force_pid_tuning
 
 
 def system_simulator_factory(plant, plant_dt, controller_dt):
@@ -61,7 +56,7 @@ if __name__ == "__main__":
         system,
         initial_Kp=0.001,
         Kp_step=0.001,
-        max_iter=100,
+        max_iter=10,
         plant_dt=plant_dt,
         controller_dt=controller_dt,
         satMin=satMin,
