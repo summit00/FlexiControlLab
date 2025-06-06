@@ -1,0 +1,16 @@
+[run]
+# Only measure coverage for source code in the src/ directory
+source = src
+omit =
+    tests/*
+    src/demos/*
+    */__init__.py
+
+[report]
+# Ignore common non-coverable lines
+exclude_lines =
+    pragma: no cover
+    if __name__ == "__main__"
+
+# Set minimum coverage threshold (redundant if using --cov-fail-under, but useful for consistency)
+fail_under = 80
