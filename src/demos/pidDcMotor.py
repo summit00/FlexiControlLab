@@ -3,8 +3,8 @@ import math
 from simulation.runSimulation import run_simulation
 from plants.dc_motor import DCMotor
 from controllers.pidController import PIDController
-from tuners.zieglerNichols import ziegler_nichols_pi_tuning
-from tuners.bruteForce import brute_force_pid_tuning
+# from tuners.zieglerNichols import ziegler_nichols_pi_tuning
+from tuners.bruteForce import BruteForcePIDTuner
 
 
 def system_simulator_factory(plant, plant_dt, controller_dt):
@@ -51,9 +51,9 @@ if __name__ == "__main__":
     # Create system simulation function
     system = system_simulator_factory(plant, plant_dt, controller_dt)
 
-    # Run tuning to get Kp, Ki, Kd
-    Kp_tuned, Ki_tuned, Kd_tuned = brute_force_pid_tuning(
-        system,
+    # Instantiate the BruteForcePIDTuner
+    tuner = BruteForcePIDTuner(
+        system=system,
         initial_Kp=0.001,
         Kp_step=0.001,
         max_iter=10,
@@ -64,6 +64,9 @@ if __name__ == "__main__":
         time_sim=1,
         set_point=1000.0,
     )
+
+    # Run the tuning process
+    Kp_tuned, Ki_tuned, Kd_tuned = tuner.tune()
 
     # Use tuned parameters in your PID controller
     controller = PIDController(
