@@ -19,14 +19,22 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9  # Specify the Python version you want to use
+          python-version: 3.9
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install coverage
 
-      - name: Run Unit Tests
+      - name: Run Unit Tests with Coverage
         env:
-          PYTHONPATH: ./src:.  # Set PYTHONPATH to include the project root and src folder
-        run: python tests/unitTests/all_tests.py
+          PYTHONPATH: ./src:.
+        run: |
+          coverage run --source=src tests/unitTests/all_tests.py
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-coverage
+          path: .coverage

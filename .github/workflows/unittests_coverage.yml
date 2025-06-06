@@ -1,0 +1,40 @@
+name: Coverage Report
+
+on:
+  workflow_run:
+    workflows: ["Run Unit Tests"]
+    types:
+      - completed
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v4
+        with:
+          name: raw-coverage
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install coverage tools
+        run: |
+          pip install coverage
+
+      - name: Generate coverage report
+        run: |
+          coverage xml
+          coverage report
+          coverage report --fail-under=85
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
