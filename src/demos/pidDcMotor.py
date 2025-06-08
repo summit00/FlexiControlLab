@@ -1,13 +1,22 @@
 import math
-
-from simulation.runSimulation import run_simulation
+from simulation.runSimulation import Simulation
 from plants.dc_motor import DCMotor
 from controllers.pidController import PIDController
-# from tuners.zieglerNichols import ziegler_nichols_pi_tuning
 from tuners.bruteForce import BruteForcePIDTuner
 
 
 def system_simulator_factory(plant, plant_dt, controller_dt):
+    """
+    Creates a system simulation function for the plant.
+
+    Args:
+        plant: The plant object (e.g., DC motor).
+        plant_dt: Time step for the plant.
+        controller_dt: Time step for the controller.
+
+    Returns:
+        A callable system function that updates the plant state.
+    """
     controller_counter = 0
     controller_interval = int(controller_dt / plant_dt)
     mv = 0.0  # Default control signal
@@ -29,6 +38,10 @@ def system_simulator_factory(plant, plant_dt, controller_dt):
 
 # Adapt DCMotor to use generic method names
 class GeneralizedDCMotor(DCMotor):
+    """
+    A wrapper around the DCMotor class to adapt it for generic simulation.
+    """
+
     def set_manipulated_variable(self, mv):
         self.set_input_voltage(mv)
 
@@ -42,7 +55,7 @@ class GeneralizedDCMotor(DCMotor):
 if __name__ == "__main__":
     plant = GeneralizedDCMotor()
     plant.set_motor_parameters(J=7.0865e-4, b=5.4177e-6, K=0.0061, R=0.0045, L=1.572e-4)
-    satMin = -5.0  # Example saturation limits
+    satMin = -5.0
     satMax = 5.0
 
     controller_dt = (plant.L / plant.R) / 10
@@ -74,13 +87,16 @@ if __name__ == "__main__":
     )
     plant.reset()
 
-    run_simulation(
-        set_point=1000.0,
+    sim = Simulation(
+        plant,
+        [controller],
+        ["get_velocity"],
+        {"plant": plant_dt, "controller_0": controller_dt},
+    )
+
+    sim.run(
+        set_points=[1000.0],
         initial_mv=0.0,
         total_time=1.0,
-        plant=plant,
-        controller=controller,
-        plant_dt=plant_dt,
-        controller_dt=controller_dt,
         extra_signals={"Current": plant.get_current},
     )

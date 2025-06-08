@@ -1,0 +1,17 @@
+{
+    "python.envFile": "${workspaceFolder}/.env",
+    
+    "editor.formatOnSave": true,
+    "python.formatter.provider": "black",
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    },
+    "terminal.integrated.env.windows": {
+        "PYTHONPATH": "${workspaceFolder}\\src"
+    },
+    "terminal.integrated.env.osx": {
+        "PYTHONPATH": "${workspaceFolder}/src"
+    }
+}

@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run All Tests",
+            "type": "shell",
+            "command": "python",
+            "args": ["tests/unitTests/all_tests.py"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}" // Add the project root to PYTHONPATH
+                }
+            }
+        },
+        {
+            "label": "Run PID DC Motor Demo",
+            "type": "shell",
+            "command": "python",
+            "args": ["src/demos/pidDcMotor.py"],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}" // Add the project root to PYTHONPATH
+                }
+            }
+        }
+    ]
+}
