@@ -48,6 +48,17 @@
                     "PYTHONPATH": "${workspaceFolder}" // Add the project root to PYTHONPATH
                 }
             }
+        },
+        {
+            "label": "Generate, Build, and Open Documentation",
+            "type": "shell",
+            "command": "cmd",
+            "args": [
+                "/c",
+                "sphinx-apidoc -o docs\\source src && sphinx-build -b html docs\\source docs\\build\\html && start docs\\build\\html\\index.html"
+            ],
+            "problemMatcher": [],
+            "detail": "Generates .rst files, builds the Sphinx documentation, and opens it in the default browser."
         }
     ]
 }
