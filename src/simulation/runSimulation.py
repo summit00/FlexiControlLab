@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 
 class Simulation:
-    def __init__(self, plant, controllers, feedback_sources, sample_times):
+    def __init__(self, plant, controllers, feedback_sources, sample_times, plot=True):
         """
         Initialize the simulation environment.
 
@@ -11,12 +11,14 @@ class Simulation:
             controllers: List of controller objects (outer to inner for cascaded control).
             feedback_sources: List of feedback sources (e.g., "get_output", "get_velocity").
             sample_times: Dictionary with sample times for 'plant' and each controller.
+            plot: Whether to generate plots (default: True).
         """
         self.plant = plant
         self.controllers = controllers
         self.feedback_sources = feedback_sources
         self.sample_times = sample_times
         self.next_sample_times = {key: 0.0 for key in sample_times}
+        self.plot = plot
 
     def run(self, set_points, initial_mv, total_time, extra_signals=None):
         """
@@ -86,7 +88,8 @@ class Simulation:
             current_time += min(self.sample_times.values())
 
         # Plotting
-        self._plot_results(times, feedbacks, mvs, set_points, extra_data)
+        if self.plot:
+            self._plot_results(times, feedbacks, mvs, set_points, extra_data)
 
     def _plot_results(self, times, feedbacks, mvs, set_points, extra_data):
         """

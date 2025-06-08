@@ -2,10 +2,26 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Run All Tests",
+            "label": "Run All Unit Tests",
             "type": "shell",
             "command": "python",
             "args": ["tests/unitTests/all_tests.py"],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "PYTHONPATH": "${workspaceFolder}" // Add the project root to PYTHONPATH
+                }
+            }
+        },
+        {
+            "label": "Run All Sim Tests",
+            "type": "shell",
+            "command": "python",
+            "args": ["tests/simTests/all_tests.py"],
             "group": {
                 "kind": "test",
                 "isDefault": true

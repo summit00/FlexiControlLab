@@ -29,7 +29,7 @@ class DCMotor:
         self.current = 0.0
         self.input_voltage = 0.0
 
-    def set_input_voltage(self, voltage):
+    def set_manipulated_variable(self, voltage):
         self.input_voltage = voltage
 
     def get_position(self):

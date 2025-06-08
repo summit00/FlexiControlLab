@@ -1,4 +1,4 @@
-name: Run Unit Tests with Coverage
+name: Run Simulation Tests
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  test:
+  simulation-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,9 +26,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Unit Tests with coverage
+      - name: Run simulation tests
         env:
           PYTHONPATH: ./src:.
         run: |
-          pytest tests/unitTests --cov --cov-report=term-missing
-
+          pytest tests/simTests --disable-warnings
