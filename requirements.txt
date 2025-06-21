@@ -2,3 +2,4 @@ pytest
 matplotlib
 numpy
 pytest-cov
+scipy
