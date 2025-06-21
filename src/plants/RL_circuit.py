@@ -26,18 +26,6 @@ class RLCircuit:
         self.current = 0.0
         self.input_voltage = 0.0
 
-    def set_input_voltage(self, voltage):
-        """
-        Set the applied voltage.
-        """
-        self.input_voltage = voltage
-
-    def get_current(self):
-        """
-        Get the current (A).
-        """
-        return self.current
-
     def ode(self, t, x, u):
         """
         Returns dx/dt for state x and input u.
@@ -45,3 +33,9 @@ class RLCircuit:
         i = x[0]
         di_dt = (u - self.R * i) / self.L
         return [di_dt]
+    
+    def output(self, x):
+        """
+        Get the current (A).
+        """
+        return x[0]

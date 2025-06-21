@@ -19,13 +19,6 @@ def test_set_parameters_and_reset():
     assert rl.current == 0.0
     assert rl.input_voltage == 0.0
 
-def test_set_input_voltage_and_get_current():
-    rl = RLCircuit()
-    rl.set_input_voltage(12.0)
-    assert rl.input_voltage == 12.0
-    rl.current = 1.23
-    assert rl.get_current() == 1.23
-
 def test_ode_behavior():
     rl = RLCircuit(R=2.0, L=0.5)
     t = 0.0

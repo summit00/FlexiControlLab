@@ -17,8 +17,8 @@ def test_magnitude_optimum_tuner_basic():
 
     Te = 2 * Ts_current
     tau = L / R
-    expected_Kp = 1.5 * L / 2 / Te
-    expected_Ki = 1 / (tau * (1 / Ts_current))
+    expected_Kp = L / 2 / Te
+    expected_Ki = 1 / (Te*tau)
     expected_Kd = 0.0
 
     assert pytest.approx(Kp, rel=1e-6) == expected_Kp

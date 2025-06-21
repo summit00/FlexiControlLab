@@ -26,11 +26,11 @@ class MagnitudeOptimumTuner:
         if self.plant.L <= 0:
             raise ValueError("Inductance L must be bigger than 0.")
         
-        Te = 2* self.Ts_current 
+        Te = 2* self.Ts_current
         tau = self.plant.L / self.plant.R  # Electrical time constant
 
-        Kp = 1.5 * self.plant.L / 2 / Te
-        Ki = 1 / (tau * (1/self.Ts_current))
+        Kp = self.plant.L / 2 / Te
+        Ki = 1 / (Te*tau )
         Kd = 0.0  # Magnitude Optimum typically doesn't use a derivative term
 
         return Kp, Ki, Kd
