@@ -21,6 +21,11 @@ class MagnitudeOptimumTuner:
         Returns:
             A tuple containing the calculated Kp, Ki, and Kd gains.  Kd is always 0.0.
         """
+        if self.plant.R <= 0:
+            raise ValueError("Resistance R must be bigger than 0.")
+        if self.plant.L <= 0:
+            raise ValueError("Inductance L must be bigger than 0.")
+        
         Te = 2* self.Ts_current 
         tau = self.plant.L / self.plant.R  # Electrical time constant
 

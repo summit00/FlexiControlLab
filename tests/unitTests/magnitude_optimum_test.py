@@ -31,8 +31,15 @@ def test_magnitude_optimum_zero_L():
     Ts_current = 0.1
     plant = DummyPlant(L, R)
     tuner = MagnitudeOptimumTuner(plant, Ts_current)
-    Kp, Ki, Kd = tuner.tune()
-    assert Kp == 0.0
-    # Ki will raise ZeroDivisionError if tau==0, so let's check for that
-    with pytest.raises(ZeroDivisionError):
-        _ = 1 / ((L / R) * (1 / Ts_current))
+    with pytest.raises(ValueError, match="Inductance L must be bigger than 0."):
+        tuner.tune()
+
+def test_magnitude_optimum_zero_R():
+    L = 0.5
+    R = 0.0
+    Ts_current = 0.1
+    plant = DummyPlant(L, R)
+    tuner = MagnitudeOptimumTuner(plant, Ts_current)
+    with pytest.raises(ValueError, match="Resistance R must be bigger than 0."):
+        tuner.tune()
+
